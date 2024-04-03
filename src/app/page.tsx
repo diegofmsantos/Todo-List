@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import Image from "next/image";
+import Image from "next/legacy/image";
 import { useContext, useState } from "react";
 import { TaskContext, TaskProvider } from "@/context/TaskContext";
 import { Label } from "@/components/ui/label";
