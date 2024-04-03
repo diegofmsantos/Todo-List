@@ -14,11 +14,7 @@ export const TaskContext = createContext<TaskContextType | null>(null)
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
-    const [task, dispatch] = useReducer(taskReducer, [{
-        id: 1,
-        task: 'Estudar programação',
-        done: false
-    }])
+    const [task, dispatch] = useReducer(taskReducer, [])
 
     const addTask = (task: string) => {
         dispatch({ type: 'add', payload: { task } })
