@@ -1,7 +1,7 @@
 "use client"
 
 import { Button } from "@/components/ui/button";
-import Image from "next/legacy/image";
+import Image from "next/image";
 import { useContext, useState } from "react";
 import { TaskContext, TaskProvider } from "@/context/TaskContext";
 import { Label } from "@/components/ui/label";
@@ -43,9 +43,11 @@ const Page = () => {
           <Image
             src="/images/bg-todo-list.jpg"
             alt="background"
-            layout="fill"
-            objectFit="cover"
-          />
+            fill
+            sizes="100vw"
+            style={{
+              objectFit: "cover"
+            }} />
         </div>
         <div
           className="w-[700px] h-[500px] bg-white/80 rounded-md p-4 flex flex-col justify-start items-center gap-2"
@@ -94,7 +96,7 @@ const Page = () => {
         </div>
       </div>
     </TaskProvider>
-  )
+  );
 }
 
 export default Page;
