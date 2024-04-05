@@ -1,36 +1,29 @@
-import { taskReducer } from "@/reducer/taskReducer"
-import { Task } from "@/types/Task"
-import { ReactNode, createContext, useReducer } from "react"
+import { taskReducer } from "@/app/reducer/taskReducer";
+import { Task } from "@/types/Task";
+import { ReactNode, createContext, useReducer } from "react";
 
 type TaskContextType = {
-    task: Task[]
+    tasks: Task[],
     addTask: (task: string) => void
-    editTask: (id: number) => void
-    doneTask: (id: number) => void
+    editTask: (id: number, newText: string) => void
+    toggleDoneTask: (id: number) => void
     deleteTask: (id: number) => void
 }
-
 export const TaskContext = createContext<TaskContextType | null>(null)
 
 export const TaskProvider = ({ children }: { children: ReactNode }) => {
 
-    const [task, dispatch] = useReducer(taskReducer, [])
+    const [tasks, dispatch] = useReducer(taskReducer, [])
 
     const addTask = (task: string) => {
         dispatch({ type: 'add', payload: { task } })
     }
 
-    const editTask = (id: number) => {
-        const item = task.find(it => it.id === id)
-        if (!item) return false
-
-        const newTask = window.prompt('Editar tarefa', item.task)
-        if (!newTask || newTask?.trim() === '') return false
-
+    const editTask = (id: number, newTask: string) => {
         dispatch({ type: 'edit', payload: { id, newTask } })
     }
 
-    const doneTask = (id: number) => {
+    const toggleDoneTask = (id: number) => {
         dispatch({ type: 'done', payload: { id } })
     }
 
@@ -39,8 +32,6 @@ export const TaskProvider = ({ children }: { children: ReactNode }) => {
     }
 
     return (
-        <TaskContext.Provider value={{ task, addTask, editTask, doneTask, deleteTask }}>
-            {children}
-        </TaskContext.Provider>
+        <TaskContext.Provider value={{ tasks, addTask, toggleDoneTask, deleteTask, editTask }}>{children}</TaskContext.Provider>
     )
 }

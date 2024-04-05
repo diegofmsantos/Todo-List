@@ -1,44 +1,53 @@
 "use client"
 
-import { Label } from "@/components/ui/label";
-import { Checkbox } from "@/components/ui/checkbox"
-import { IoTrashOutline } from "react-icons/io5";
-import { MdOutlineEdit } from "react-icons/md";
-import { useContext, useState } from "react";
-import { TaskContext } from "@/context/TaskContext";
+import { TaskContext } from "@/context/TaskContext"
+import { useContext, useState } from "react"
+import { IoTrashOutline } from "react-icons/io5"
+import { MdOutlineEdit } from "react-icons/md"
 
 export const TaskItem = () => {
 
     const taskCtx = useContext(TaskContext)
-    const [scratched, setScratched] = useState(false)
 
     const handleEditTask = (id: number) => {
-        taskCtx?.editTask(id)
+        const item = taskCtx?.tasks.find(it => it.id === id)
+        if (!item) return false
+
+        const newText = window.prompt('Editar tarefa?', item.task)
+        if (!newText || newText.trim() === '') return false
+
+        taskCtx?.editTask(id, newText)
+
     }
 
     const handleDoneTask = (id: number) => {
-        setScratched(!scratched)
-        taskCtx?.doneTask(id)
+        taskCtx?.toggleDoneTask(id)
     }
 
     const handleDeleteTask = (id: number) => {
-        taskCtx?.deleteTask(id)
+        if (window.confirm('Tem certeza que deseja excluir a tarefa?')) {
+            taskCtx?.deleteTask(id)
+        }
+    }
+
+    const getTaskClass = (id: number) => {
+        const task = taskCtx?.tasks.find(item => item.id === id)
+        if (!task) return ''
+
+        return task.done ? 'text-red-600 line-through' : 'text-black'
     }
 
     return (
-        <div className="h-9 rounded-md p-1 flex items-center justify-between w-full bg-teal-100">
-            {taskCtx?.tasks.map((item) => (
+
+        <div className="rounded-md p-1 flex flex-col gap-4 items-center justify-between w-full">
+            {taskCtx?.tasks.map(item => (
                 <div
                     key={item.id}
-                    className="h-9 rounded-md p-1 flex items-center justify-between w-full bg-teal-100">
+                    className="rounded-md p-1 flex items-center justify-between w-full bg-teal-100">
                     <div className="flex items-center gap-2">
-                        <Checkbox
-                            defaultChecked={item.done}
-                            onClick={() => handleDoneTask(item.id)} />
-                        <Label
-                            className={`text-md ${scratched ? 'line-through text-red-400' : 'text-black'}`}>
-                            {item.task}
-                        </Label>
+                        <input type="checkbox" onClick={() => handleDoneTask(item.id)} />
+                        <label
+                            className={`text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70`}>{item.task}</label>
                     </div>
                     <div>
                         <div className="flex items-center gap-2">
@@ -53,7 +62,9 @@ export const TaskItem = () => {
                         </div>
                     </div>
                 </div>
-            ))}
-        </div>
+            ))
+            }
+        </ div>
+
     )
 }
