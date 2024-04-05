@@ -1,4 +1,4 @@
-# Lista de Taredas
+# Lista de Tarefas
 ## Projeto feito como método de estudo.
 
 ### Tecnologias utilizadas:
