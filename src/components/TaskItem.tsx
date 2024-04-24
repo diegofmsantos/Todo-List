@@ -17,7 +17,6 @@ export const TaskItem = () => {
         if (!newText || newText.trim() === '') return false
 
         taskCtx?.editTask(id, newText)
-
     }
 
     const handleDoneTask = (id: number) => {
@@ -28,13 +27,6 @@ export const TaskItem = () => {
         if (window.confirm('Tem certeza que deseja excluir a tarefa?')) {
             taskCtx?.deleteTask(id)
         }
-    }
-
-    const getTaskClass = (id: number) => {
-        const task = taskCtx?.tasks.find(item => item.id === id)
-        if (!task) return ''
-
-        return task.done ? 'text-red-600 line-through' : 'text-black'
     }
 
     return (

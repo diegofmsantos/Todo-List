@@ -15,7 +15,7 @@ const Page = () => {
           <Image
             src="/images/bg-todo-list.jpg" alt="background" fill sizes="100vw" style={{ objectFit: "cover" }} />
         </div>
-        <div className="min-h-[500px] bg-white/80 rounded-md p-4 my-4 flex flex-col items-center gap-2">
+        <div className="h-screen min-h-[500px] bg-white/80 rounded-md p-4 my-4 flex flex-col items-center gap-2">
           <Header />
           <TaskItem />
         </div>

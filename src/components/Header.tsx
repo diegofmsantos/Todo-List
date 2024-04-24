@@ -11,6 +11,8 @@ export const Header = () => {
     const [taskField, setTaskField] = useState('')
 
     const handleAddTask = () => {
+        if (!taskField || taskField.trim() === '') return false
+
         taskCtx?.addTask(taskField)
         setTaskField('')
     }
